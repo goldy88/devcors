@@ -32,6 +32,9 @@ public class BrnoLesson2 {
         System.out.println("The sum of the even numbers is: " + loop.sumEven(6));
         System.out.println();
 
+        loop.hailstoneProblem(3);
+        System.out.println();
+
         System.out.println("Right Triangle");
         loop.triangle1(3);
         System.out.println();

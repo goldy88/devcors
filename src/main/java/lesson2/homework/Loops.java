@@ -36,8 +36,22 @@ public class Loops {
      * For x=3 iterations leads to the sequence 3, 10, 5, 16, 4, 2, 1 -> method should return "6", since "x" reached value 1 after 6 iterations.
      */
     public long hailstoneProblem(int x) {
-        return 0l;
+            int number = x;
+            int steps = 0;
+            while (number != 1) {
+                if (number % 2 == 0) {
+                    System.out.println(number + " is even, so I take half: " + number / 2);
+                    number /= 2;
+                } else {
+                    System.out.println(number + " is odd, so I make 3n + 1: " + (number * 3 + 1));
+                    number = number * 3 + 1;
+                }
+                steps++;
+            }
+            System.out.println("The process took " + steps + (steps < 2 ? " step" : " steps") + " to reach 1");
+        return steps;
     }
+
 
     /**
      * Your task is to create triangle of size 'x'. which look like this for x = 3:
