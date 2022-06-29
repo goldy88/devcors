@@ -1,6 +1,6 @@
 package lesson3;
 
-public interface StringList extends Iterable<String> {
+public interface List<ElemType> extends Iterable<ElemType> {
 
     /**
      * @return size of list.
@@ -15,49 +15,48 @@ public interface StringList extends Iterable<String> {
     /**
      * @return true in list contains string, false otherwise
      */
-    boolean contains(String str);
-
+    boolean contains(ElemType element);
 
     /**
      * Adds new string to list
      */
-    void add(String str);
+    void add(ElemType element);
 
     /**
      * @return true in case this list contains all strings contained in stringList
      */
-    boolean containsAll(StringList stringList);
+    boolean containsAll(List<ElemType> list);
 
     /**
      * Adds all strings from stringList to this list
      */
-    void addAll(StringList stringList);
+    void addAll(List<ElemType>  list);
 
     /**
      * @return string from given index, throws exception if index is out of bounds.
      */
-    String get(int index);
+    ElemType get(int index);
 
     /**
      * Sets string to given index.
      * <p>In case index does not exist yet (for example nothing was added to list), does nothing
      */
-    void set(int index, String element);
+    void set(int index, ElemType element);
 
     /**
      * Adds string to given index. All consecutive indexes are moved to index + 1 position.
      * <p>In case index does not exist yet (for example nothing was added to list), does nothing
      */
-    void add(int index, String element);
+    void add(int index, ElemType element);
 
     /**
      * @return first index of given string or -1 if this string is not in this list
      */
-    int indexOf(String str);
+    int indexOf(ElemType element);
 
     /**
      * @return last index of given string or -1 if this string is not in this list
      */
-    int lastIndexOf(String str);
+    int lastIndexOf(ElemType element);
 
 }
