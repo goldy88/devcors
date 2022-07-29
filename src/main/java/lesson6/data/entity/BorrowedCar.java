@@ -1,0 +1,28 @@
+package lesson6.data.entity;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+
+@Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class BorrowedCar {
+
+    @Id
+    @GeneratedValue
+    private Integer id;
+    private Integer userId;
+    private Integer carId;
+
+
+}

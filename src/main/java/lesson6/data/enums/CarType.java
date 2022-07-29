@@ -1,4 +1,4 @@
-package lesson6.data.entity.enums;
+package lesson6.data.enums;
 
 public enum CarType {
 
