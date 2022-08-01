@@ -11,7 +11,7 @@ import java.util.List;
 public interface BorrowedCarRepository extends JpaRepository<BorrowedCar, Integer> {
 
 
-    BorrowedCar findBorrowedCarByUserIdAndCarId(Integer userId, Integer carId);
+    BorrowedCar findByUserIdAndCarId(Integer userId, Integer carId);
 
     List<BorrowedCar> findBorrowedCarsByUserId(Integer userId);
 }

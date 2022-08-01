@@ -107,7 +107,7 @@ public class UserController {
     @PutMapping("/users/{userId}/car/return/{carId}")
     public ResponseEntity<HttpStatus> returnCar(@PathVariable Integer userId,
                                                 @PathVariable Integer carId) {
-        BorrowedCar borrowedCar = borrowedCarRepository.findBorrowedCarByUserIdAndCarId(userId, carId);
+        BorrowedCar borrowedCar = borrowedCarRepository.findByUserIdAndCarId(userId, carId);
         if (borrowedCar == null) {
            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {

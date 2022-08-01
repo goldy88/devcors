@@ -38,8 +38,8 @@ public class CarService {
         return carRepository.findAll();
     }
 
-    public List<Car> listOfBranch(String query) {
-        List<Car> cars = carRepository.findByBranch(query);
+    public List<Car> listOfBrand(String query) {
+        List<Car> cars = carRepository.findByBrand(query);
         return cars;
     }
 

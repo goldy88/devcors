@@ -19,8 +19,6 @@ public class BorrowedCarService {
         return borrowedCarRepository.findAll();
     }
 
-
-
     public void save(BorrowedCar borrowedCar) {
         borrowedCarRepository.save(borrowedCar);
     }

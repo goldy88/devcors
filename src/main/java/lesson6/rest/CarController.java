@@ -83,7 +83,7 @@ public class CarController {
 
     @GetMapping("/cars/filter")
     public ResponseEntity<List<Car>> listOfBrach(@RequestParam("brandName") String query) {
-        return ResponseEntity.ok(carService.listOfBranch(query));
+        return ResponseEntity.ok(carService.listOfBrand(query));
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public interface CarRepository extends JpaRepository<Car, Integer> {
 
     @Query("SELECT c FROM Car c WHERE c.brand like concat('%', :query, '%') ")
-    List<Car> findByBranch(String query);
+    List<Car> findByBrand(String query);
 
 
 
