@@ -11,6 +11,7 @@ import lesson6.services.UserService;
 import lesson6.data.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -37,6 +38,7 @@ public class UserController {
     /**
      * @return all Users
      */
+   // @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/users")
     public List<User> findAll() {
         return userService.getUsers(HttpStatus.OK);
@@ -46,6 +48,7 @@ public class UserController {
      * @param id
      * @return user by id
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/users/{id}")
     public ResponseEntity<User> findUserById(@PathVariable("id") Long id) {
         Optional<User> user = userService.getUserById(id);
@@ -56,6 +59,7 @@ public class UserController {
     /**
      * @param user create new user
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/users")
     public void createUser(@RequestBody User user) {
         userService.save(user);
@@ -67,6 +71,7 @@ public class UserController {
      * @param user
      * @return edited user
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value = "/users/{id}")
     public ResponseEntity<User> updateUser(@PathVariable(value = "id") Long id,
                                            @RequestBody User user) {
@@ -82,12 +87,19 @@ public class UserController {
     /**
      * delete user
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value = "/users/{id}")
     public void delete(@PathVariable Long id) {
         userService.delete(id);
     }
 
-
+    /**
+     *
+     * @param userId
+     * @param carId
+     * @return
+     */
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value = "/users/{userId}/car/borrow/{carId}")
     public ResponseEntity<BorrowedCar> rentCar(@PathVariable(value = "userId") Integer userId,
                                                @PathVariable(value = "carId") Integer carId) {
@@ -104,6 +116,7 @@ public class UserController {
      * @param carId
      * @return
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/users/{userId}/car/return/{carId}")
     public ResponseEntity<HttpStatus> returnCar(@PathVariable Integer userId,
                                                 @PathVariable Integer carId) {
@@ -121,7 +134,7 @@ public class UserController {
      * @param userId
      * @return
      */
-
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users/{userId}/car")
     public ResponseEntity<List<Car>> getBorrowedCars(@PathVariable Integer userId) {
         if (userRepository.existsById(Long.valueOf(userId))) {

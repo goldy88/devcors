@@ -1,6 +1,8 @@
 package lesson6.services;
 
+
 import lesson6.data.entity.User;
+import lesson6.data.enums.UserRole;
 import lesson6.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,14 +20,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    @PostConstruct
-    void init() {
-        userRepository.save(User.builder()
-                .email("email@email.cz")
-                .password(passwordEncoder.encode("password"))
-                .build());
 
+    @PostConstruct
+    public void postConstruct() {
+        User user = User.builder().username("admin")
+                .firstname("Daniel")
+                .lastname("Goldmann")
+                .address("BRNO123")
+                .email("godmann@gmail.com")
+                .password(passwordEncoder.encode("admin"))
+                .role(UserRole.ADMIN).build();
+        userRepository.save(user);
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

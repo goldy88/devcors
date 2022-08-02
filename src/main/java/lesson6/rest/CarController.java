@@ -7,6 +7,7 @@ import lesson6.services.CarService;
 import lesson6.data.entity.Car;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class CarController {
     private final CarRepository carRepository;
 
     private final CarService carService;
-    private List<Car> List;
+
 
     public CarController(CarRepository carRepository, CarService carService) {
         this.carRepository = carRepository;
@@ -28,7 +29,6 @@ public class CarController {
     /**
      * @return all cars
      */
-
     @GetMapping(value = "cars")
     public List<Car> findAll() {
         return carService.getCars();
@@ -38,6 +38,7 @@ public class CarController {
      * @param id
      * @return car by Id
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "cars/{id}")
     public ResponseEntity<Car> getCarById(@PathVariable("id") Integer id) {
         Optional<Car> car = carService.getCarById(id);
@@ -49,6 +50,7 @@ public class CarController {
     /**
      * @param car create new car
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/cars")
     public void createCar(@RequestBody Car car) {
         carService.save(car);
@@ -57,6 +59,7 @@ public class CarController {
     /**
      * delete car
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value = "/cars/{id}")
     public void delete(@PathVariable Integer id) {
         carService.delete(id);
@@ -68,6 +71,7 @@ public class CarController {
      * @param car
      * @return edited car
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value = "/cars/{id}")
     public ResponseEntity<User> updateUser(@PathVariable(value = "id") Integer id,
                                            @RequestBody Car car) {

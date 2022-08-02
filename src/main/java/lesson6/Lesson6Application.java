@@ -2,8 +2,6 @@ package lesson6;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-
 @SpringBootApplication
 public class Lesson6Application {
 
@@ -39,8 +37,28 @@ public class Lesson6Application {
      * <p>This application should also be startable as a Spring boot application.✔
      * <p>And remember - google is your friend :)
      */
+
+    /**
+    # Lesson8 homework
+
+    - Continue on your code from lesson6 and lesson7✔
+    - Enable spring web security✔
+    - Create `SecurityFilterChain` bean✔
+    - Create `PasswordEncoder` bean✔
+    - Implements `UserDetails` on `UserEntity`✔
+                - Create `UserDetailServiceImpl` and implement `UserDetailsService` bean✔
+    - Create first user with `ADMIN` role in `@PostConstruct` method✔
+    - Let `GET /cars` and `GET /cars/filter` endpoints public✔
+    - All other car endpoints protect with `ADMIN` role✔
+    - All user endpoints protect with `ADMIN` or `USER` roles✔
+    - Update your tests
+
+
+     */
     public static void main(String[] args) {
         SpringApplication.run(Lesson6Application.class, args);
     }
+
+
 
 }
