@@ -1,8 +1,5 @@
 # do not modify this file
-messages:
-  stringText1: Spring boot is awesome
-  stringText2: Quarkus sucks
-  integerValue: 5
+
 
 
 spring:
@@ -12,10 +9,6 @@ spring:
         password:
         driverClassName: org.h2.Driver
 
-  security:
-    user:
-      name: admin
-      password: admin2
 
   h2:
     console:
@@ -23,4 +16,4 @@ spring:
 
   jpa:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
-    generate-ddl: false
+    generate-ddl: true
