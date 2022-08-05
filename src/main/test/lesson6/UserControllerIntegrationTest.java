@@ -3,14 +3,16 @@ package lesson6;
 import lesson6.data.entity.User;
 import lesson6.data.enums.UserRole;
 import lesson6.repo.UserRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.util.CollectionUtils;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,15 +51,15 @@ class UserControllerIntegrationTest {
             .address("Baker street 10")
             .build();
 
-    @AfterEach
-    void afterEach() {
-        userRepository.deleteAll();
+    static public String getAuthHeader(String username, String password) {
+        return "Basic " + Base64.getEncoder().encodeToString((username + ":" + password).getBytes(StandardCharsets.UTF_8));
     }
 
     @Test
     void createUserShouldReturnOk() {
         webTestClient.post()
                 .uri(ub -> ub.path("/users").build())
+                .header(HttpHeaders.AUTHORIZATION, getAuthHeader("admin", "admin"))
                 .bodyValue(USER_1)
                 .exchange()
                 .expectStatus()
@@ -65,8 +67,8 @@ class UserControllerIntegrationTest {
 
         List<User> users = userRepository.findAll();
         assertFalse(CollectionUtils.isEmpty(users));
-        assertEquals(1, users.size());
-        User user = users.get(0);
+        assertEquals(3, users.size());
+        User user = users.get(1);
 
         assertEquals(EMAIL_1, user.getEmail());
         assertEquals(FIRSTNAME_1, user.getFirstname());
@@ -84,6 +86,7 @@ class UserControllerIntegrationTest {
         savedUser.setRole(UserRole.USER);
         webTestClient.put()
                 .uri(ub -> ub.path("/users/" + userId).build())
+                .header(HttpHeaders.AUTHORIZATION, getAuthHeader("admin", "admin"))
                 .bodyValue(savedUser)
                 .exchange()
                 .expectStatus()
@@ -99,7 +102,8 @@ class UserControllerIntegrationTest {
         User savedUser = userRepository.save(USER_1);
 
         webTestClient.put()
-                .uri(ub -> ub.path("/users/" + (savedUser.getId() + 1)).build())
+                .uri(ub -> ub.path("/users/" + (savedUser.getId() + 2)).build())
+                .header(HttpHeaders.AUTHORIZATION, getAuthHeader("admin", "admin"))
                 .bodyValue(savedUser)
                 .exchange()
                 .expectStatus()
@@ -113,6 +117,7 @@ class UserControllerIntegrationTest {
 
         List<User> users = webTestClient.get()
                 .uri(ub -> ub.path("/users/").build())
+                .header(HttpHeaders.AUTHORIZATION, getAuthHeader("admin", "admin"))
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -121,7 +126,7 @@ class UserControllerIntegrationTest {
                 .getResponseBody();
 
         assertNotNull(users);
-        assertEquals(2, users.size());
+        assertEquals(3, users.size());
     }
 
     @Test
@@ -130,6 +135,7 @@ class UserControllerIntegrationTest {
 
         User user = webTestClient.get()
                 .uri(ub -> ub.path("/users/" + savedUser.getId()).build())
+                .header(HttpHeaders.AUTHORIZATION, getAuthHeader("admin", "admin"))
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -147,6 +153,7 @@ class UserControllerIntegrationTest {
 
         webTestClient.get()
                 .uri(ub -> ub.path("/users/" + (savedUser.getId() + 1)).build())
+                .header(HttpHeaders.AUTHORIZATION, getAuthHeader("admin", "admin"))
                 .exchange()
                 .expectStatus()
                 .isNotFound();
@@ -159,13 +166,14 @@ class UserControllerIntegrationTest {
 
         webTestClient.delete()
                 .uri(ub -> ub.path("/users/" + savedUser.getId()).build())
+                .header(HttpHeaders.AUTHORIZATION, getAuthHeader("admin", "admin"))
                 .exchange()
                 .expectStatus()
                 .isOk();
 
         List<User> users = userRepository.findAll();
         assertFalse(CollectionUtils.isEmpty(users));
-        assertEquals(1, users.size());
-        assertEquals(EMAIL_2, users.get(0).getEmail());
+        assertEquals(2, users.size());
+        assertEquals(EMAIL_2, users.get(1).getEmail());
     }
 }

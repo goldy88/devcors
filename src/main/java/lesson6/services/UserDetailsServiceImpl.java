@@ -24,10 +24,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @PostConstruct
     public void postConstruct() {
         User user = User.builder().username("admin")
-                .firstname("Daniel")
-                .lastname("Goldmann")
-                .address("BRNO123")
-                .email("godmann@gmail.com")
+                .firstname("Firstname")
+                .lastname("Lastname")
+                .address("Downing street 10")
+                .email("admin@email.com")
                 .password(passwordEncoder.encode("admin"))
                 .role(UserRole.ADMIN).build();
         userRepository.save(user);

@@ -9,9 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.util.CollectionUtils;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,10 +60,16 @@ class CarControllerIntegrationTest {
             .type(CarType.COMBI)
             .build();
 
+    static public String getAuthHeader(String username, String password) {
+        return "Basic " + Base64.getEncoder().encodeToString((username + ":" + password).getBytes(StandardCharsets.UTF_8));
+    }
+
+
     @Test
     void createCarShouldReturnOk() {
         webTestClient.post()
                 .uri(ub -> ub.path("/cars").build())
+                .header(HttpHeaders.AUTHORIZATION, getAuthHeader("admin", "admin"))
                 .bodyValue(CAR_1)
                 .exchange()
                 .expectStatus()
@@ -87,6 +96,7 @@ class CarControllerIntegrationTest {
         savedCar.setBrand(BRAND_2);
         webTestClient.put()
                 .uri(ub -> ub.path("/cars/" + carId).build())
+                .header(HttpHeaders.AUTHORIZATION, getAuthHeader("admin", "admin"))
                 .bodyValue(savedCar)
                 .exchange()
                 .expectStatus()
@@ -103,6 +113,7 @@ class CarControllerIntegrationTest {
 
         webTestClient.put()
                 .uri(ub -> ub.path("/cars/" + (savedCar.getId() + 1)).build())
+                .header(HttpHeaders.AUTHORIZATION, getAuthHeader("admin", "admin"))
                 .bodyValue(savedCar)
                 .exchange()
                 .expectStatus()
@@ -116,6 +127,7 @@ class CarControllerIntegrationTest {
 
         List<Car> cars = webTestClient.get()
                 .uri(ub -> ub.path("/cars").build())
+                .header(HttpHeaders.AUTHORIZATION, getAuthHeader("admin", "admin"))
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -133,6 +145,7 @@ class CarControllerIntegrationTest {
 
         Car car = webTestClient.get()
                 .uri(ub -> ub.path("/cars/" + savedCar.getId()).build())
+                .header(HttpHeaders.AUTHORIZATION, getAuthHeader("admin", "admin"))
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -151,6 +164,7 @@ class CarControllerIntegrationTest {
 
         List<Car> cars = webTestClient.get()
                 .uri(ub -> ub.path("/cars/filter").queryParam("brandName", BRAND_1).build())
+                .header(HttpHeaders.AUTHORIZATION, getAuthHeader("admin", "admin"))
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -169,6 +183,7 @@ class CarControllerIntegrationTest {
 
         webTestClient.get()
                 .uri(ub -> ub.path("/cars/" + (savedCar.getId() + 1)).build())
+                .header(HttpHeaders.AUTHORIZATION, getAuthHeader("admin", "admin"))
                 .exchange()
                 .expectStatus()
                 .isNotFound();
@@ -181,6 +196,7 @@ class CarControllerIntegrationTest {
 
         webTestClient.delete()
                 .uri(ub -> ub.path("/cars/" + savedCar.getId()).build())
+                .header(HttpHeaders.AUTHORIZATION, getAuthHeader("admin", "admin"))
                 .exchange()
                 .expectStatus()
                 .isOk();

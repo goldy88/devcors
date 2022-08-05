@@ -38,7 +38,8 @@ public class CarController {
      * @param id
      * @return car by Id
      */
-    @PreAuthorize("hasRole('ADMIN')")
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value = "cars/{id}")
     public ResponseEntity<Car> getCarById(@PathVariable("id") Integer id) {
         Optional<Car> car = carService.getCarById(id);
@@ -50,7 +51,7 @@ public class CarController {
     /**
      * @param car create new car
      */
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(value = "/cars")
     public void createCar(@RequestBody Car car) {
         carService.save(car);
@@ -59,7 +60,7 @@ public class CarController {
     /**
      * delete car
      */
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping(value = "/cars/{id}")
     public void delete(@PathVariable Integer id) {
         carService.delete(id);
@@ -71,7 +72,7 @@ public class CarController {
      * @param car
      * @return edited car
      */
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping(value = "/cars/{id}")
     public ResponseEntity<User> updateUser(@PathVariable(value = "id") Integer id,
                                            @RequestBody Car car) {

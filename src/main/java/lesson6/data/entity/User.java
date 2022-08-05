@@ -1,5 +1,6 @@
 package lesson6.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lesson6.data.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,6 +37,7 @@ public class User implements UserDetails {
     private String username;
 
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.toString()));
