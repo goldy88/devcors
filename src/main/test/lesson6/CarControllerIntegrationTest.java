@@ -1,9 +1,10 @@
 package lesson6;
 
-import lesson6.data.entity.Car;
-import lesson6.data.enums.CarColor;
-import lesson6.data.enums.CarType;
-import lesson6.repo.CarRepository;
+import application1.lesson6.Lesson6Application;
+import application1.lesson6.data.entity.Car;
+import application1.lesson6.data.enums.CarColor;
+import application1.lesson6.data.enums.CarType;
+import application1.lesson6.repo.CarRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

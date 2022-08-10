@@ -1,8 +1,9 @@
 package lesson6;
 
-import lesson6.data.entity.User;
-import lesson6.data.enums.UserRole;
-import lesson6.repo.UserRepository;
+import application1.lesson6.Lesson6Application;
+import application1.lesson6.data.entity.User;
+import application1.lesson6.data.enums.UserRole;
+import application1.lesson6.repo.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;

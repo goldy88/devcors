@@ -1,6 +1,6 @@
 package lesson5;
 
-import  lesson5.facade.OutputFacade;
+import application1.lesson5.facade.OutputFacade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

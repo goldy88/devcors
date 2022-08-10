@@ -1,14 +1,11 @@
 # do not modify this file
 
-
-
 spring:
   datasource:
         url: jdbc:h2:mem:mydb
         username: dan
         password:
         driverClassName: org.h2.Driver
-
 
   h2:
     console:

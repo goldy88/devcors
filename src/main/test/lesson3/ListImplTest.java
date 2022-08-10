@@ -1,6 +1,8 @@
 package lesson3;
 
 
+import application1.lesson3.InvalidIndexException;
+import application1.lesson3.ListImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
